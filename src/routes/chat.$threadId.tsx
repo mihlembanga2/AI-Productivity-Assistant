@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { createFileRoute, useParams, useOutletContext } from "@tanstack/react-router";
+import { createFileRoute, useParams } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
@@ -7,7 +7,7 @@ import { Send, StopCircle, User, Bot, Copy, Check, Sparkles } from "lucide-react
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { saveThreads, type ChatThread } from "./chat";
+import { getStoredThreads, saveThreads } from "./chat";
 import ReactMarkdown from "react-markdown";
 
 export const Route = createFileRoute("/chat/$threadId")({
@@ -20,17 +20,19 @@ export const Route = createFileRoute("/chat/$threadId")({
   component: ChatThreadPage,
 });
 
+function getMessageText(message: UIMessage): string {
+  if (message.parts && message.parts.length > 0) {
+    return message.parts
+      .filter((p): p is { type: "text"; text: string } => p.type === "text")
+      .map((p) => p.text)
+      .join("");
+  }
+  // Fallback for older message shapes
+  return (message as unknown as Record<string, unknown>).content as string ?? "";
+}
+
 function ChatThreadPage() {
   const { threadId } = useParams({ from: "/chat/$threadId" });
-  const { threads, setThreads, updateThreadTitle } = useOutletContext<{
-    threads: ChatThread[];
-    setThreads: React.Dispatch<React.SetStateAction<ChatThread[]>>;
-    updateThreadTitle: (id: string, title: string) => void;
-  }>();
-
-  const thread = threads.find((t) => t.id === threadId);
-  const initialMessages = thread?.messages ?? [];
-
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -39,37 +41,24 @@ function ChatThreadPage() {
 
   const { messages, sendMessage, status, stop } = useChat({
     id: threadId,
-    messages: initialMessages,
     transport,
     onError: (error) => {
       console.error("Chat error:", error);
-    },
-    onFinish: (message) => {
-      // Update thread title from first user message if still "New Conversation"
-      if (thread && thread.title === "New Conversation") {
-        const firstUserMsg = messages.find((m) => m.role === "user");
-        if (firstUserMsg) {
-          const title = firstUserMsg.content.slice(0, 40) + (firstUserMsg.content.length > 40 ? "..." : "");
-          updateThreadTitle(threadId, title);
-        }
-      }
     },
   });
 
   // Persist messages to localStorage
   useEffect(() => {
     if (status === "ready" || status === "error") {
-      setThreads((prev) => {
-        const updated = prev.map((t) =>
-          t.id === threadId
-            ? { ...t, messages: messages as UIMessage[], updatedAt: new Date().toISOString() }
-            : t
-        );
-        saveThreads(updated);
-        return updated;
-      });
+      const threads = getStoredThreads();
+      const updated = threads.map((t) =>
+        t.id === threadId
+          ? { ...t, messages: messages as UIMessage[], updatedAt: new Date().toISOString() }
+          : t
+      );
+      saveThreads(updated);
     }
-  }, [messages, status, threadId, setThreads]);
+  }, [messages, status, threadId]);
 
   // Auto-scroll
   useEffect(() => {
@@ -139,15 +128,15 @@ function ChatThreadPage() {
                   {message.role === "assistant" ? (
                     <div className="prose prose-sm dark:prose-invert max-w-none">
                       <ReactMarkdown>
-                        {message.parts?.map((p) => (p.type === "text" ? p.text : "")).join("") || message.content}
+                        {getMessageText(message)}
                       </ReactMarkdown>
                     </div>
                   ) : (
-                    <p>{message.content}</p>
+                    <p>{getMessageText(message)}</p>
                   )}
 
                   {message.role === "assistant" && (
-                    <MessageActions text={message.parts?.map((p) => (p.type === "text" ? p.text : "")).join("") || message.content} />
+                    <MessageActions text={getMessageText(message)} />
                   )}
                 </div>
 

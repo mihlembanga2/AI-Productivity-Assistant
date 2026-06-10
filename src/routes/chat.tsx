@@ -101,14 +101,6 @@ function ChatLayout() {
     }
   };
 
-  const updateThreadTitle = (threadId: string, title: string) => {
-    const updated = threads.map((t) =>
-      t.id === threadId ? { ...t, title } : t
-    );
-    setThreads(updated);
-    saveThreads(updated);
-  };
-
   return (
     <div className="flex h-[calc(100vh-3rem)]">
       {/* Mobile toggle */}
@@ -180,7 +172,7 @@ function ChatLayout() {
 
       {/* Chat area */}
       <div className="flex-1 overflow-hidden">
-        <Outlet context={{ threads, setThreads, updateThreadTitle }} />
+        <Outlet />
       </div>
     </div>
   );
