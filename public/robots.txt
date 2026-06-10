@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /chat/
+Sitemap: https://id-preview--7ac7a439-da13-4127-9de9-927a7241a77d.lovable.app/sitemap.xml
