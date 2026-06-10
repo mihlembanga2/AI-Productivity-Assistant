@@ -4,8 +4,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -54,48 +52,49 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(0.985 0.003 260);
-  --foreground: oklch(0.16 0.03 264);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.16 0.03 264);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.16 0.03 264);
-  --primary: oklch(0.35 0.09 255);
-  --primary-foreground: oklch(0.98 0.005 255);
-  --secondary: oklch(0.96 0.008 255);
-  --secondary-foreground: oklch(0.35 0.09 255);
-  --muted: oklch(0.94 0.006 255);
-  --muted-foreground: oklch(0.5 0.04 255);
-  --accent: oklch(0.94 0.006 255);
-  --accent-foreground: oklch(0.35 0.09 255);
+  /* Deep & Modern — Command Center dark theme (#0F172A / #1E293B / #38BDF8 / #818CF8 / #C084FC) */
+  --radius: 0.875rem;
+  --background: oklch(0.21 0.04 264);
+  --foreground: oklch(0.93 0.015 255);
+  --card: oklch(0.27 0.04 264);
+  --card-foreground: oklch(0.93 0.015 255);
+  --popover: oklch(0.27 0.04 264);
+  --popover-foreground: oklch(0.93 0.015 255);
+  --primary: oklch(0.72 0.14 233);
+  --primary-foreground: oklch(0.18 0.04 264);
+  --secondary: oklch(0.31 0.04 264);
+  --secondary-foreground: oklch(0.93 0.015 255);
+  --muted: oklch(0.31 0.035 264);
+  --muted-foreground: oklch(0.68 0.03 255);
+  --accent: oklch(0.31 0.04 264);
+  --accent-foreground: oklch(0.93 0.015 255);
   --destructive: oklch(0.58 0.22 25);
   --destructive-foreground: oklch(0.98 0.005 255);
-  --border: oklch(0.9 0.01 255);
-  --input: oklch(0.9 0.01 255);
-  --ring: oklch(0.55 0.08 255);
-  --chart-1: oklch(0.55 0.12 200);
-  --chart-2: oklch(0.5 0.1 160);
-  --chart-3: oklch(0.45 0.08 240);
+  --border: oklch(0.34 0.035 264);
+  --input: oklch(0.34 0.035 264);
+  --ring: oklch(0.72 0.14 233);
+  --chart-1: oklch(0.72 0.14 233);
+  --chart-2: oklch(0.7 0.13 285);
+  --chart-3: oklch(0.74 0.15 310);
   --chart-4: oklch(0.6 0.1 80);
   --chart-5: oklch(0.55 0.12 30);
-  --sidebar: oklch(0.98 0.004 255);
-  --sidebar-foreground: oklch(0.16 0.03 264);
-  --sidebar-primary: oklch(0.35 0.09 255);
-  --sidebar-primary-foreground: oklch(0.98 0.005 255);
-  --sidebar-accent: oklch(0.94 0.006 255);
-  --sidebar-accent-foreground: oklch(0.35 0.09 255);
-  --sidebar-border: oklch(0.9 0.01 255);
-  --sidebar-ring: oklch(0.55 0.08 255);
+  --sidebar: oklch(0.24 0.04 264);
+  --sidebar-foreground: oklch(0.93 0.015 255);
+  --sidebar-primary: oklch(0.72 0.14 233);
+  --sidebar-primary-foreground: oklch(0.18 0.04 264);
+  --sidebar-accent: oklch(0.31 0.04 264);
+  --sidebar-accent-foreground: oklch(0.93 0.015 255);
+  --sidebar-border: oklch(0.34 0.035 264);
+  --sidebar-ring: oklch(0.72 0.14 233);
 
   /* Custom tokens */
-  --surface-elevated: oklch(1 0 0);
-  --surface-ground: oklch(0.985 0.003 260);
-  --surface-inset: oklch(0.92 0.008 255);
-  --gradient-subtle: linear-gradient(135deg, oklch(0.96 0.008 255) 0%, oklch(0.985 0.003 260) 100%);
-  --shadow-card: 0 1px 3px 0 color-mix(in oklab, var(--foreground) 6%, transparent), 0 1px 2px -1px color-mix(in oklab, var(--foreground) 6%, transparent);
-  --shadow-elevated: 0 4px 6px -1px color-mix(in oklab, var(--foreground) 5%, transparent), 0 2px 4px -2px color-mix(in oklab, var(--foreground) 5%, transparent);
-  --shadow-lg: 0 10px 15px -3px color-mix(in oklab, var(--foreground) 5%, transparent), 0 4px 6px -4px color-mix(in oklab, var(--foreground) 5%, transparent);
+  --surface-elevated: oklch(0.27 0.04 264);
+  --surface-ground: oklch(0.21 0.04 264);
+  --surface-inset: oklch(0.18 0.035 264);
+  --gradient-subtle: linear-gradient(135deg, oklch(0.27 0.04 264) 0%, oklch(0.21 0.04 264) 100%);
+  --shadow-card: 0 1px 3px 0 color-mix(in oklab, black 30%, transparent), 0 1px 2px -1px color-mix(in oklab, black 30%, transparent);
+  --shadow-elevated: 0 4px 6px -1px color-mix(in oklab, black 35%, transparent), 0 2px 4px -2px color-mix(in oklab, black 35%, transparent);
+  --shadow-lg: 0 10px 25px -5px color-mix(in oklab, black 45%, transparent), 0 8px 10px -6px color-mix(in oklab, black 40%, transparent);
 }
 
 .dark {
