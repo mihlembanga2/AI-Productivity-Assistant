@@ -83,7 +83,7 @@ function Dashboard() {
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-[#C084FC]">Welcome to your AI Assistant</h1>
+              <h1 className="text-2xl font-bold tracking-tight text-[#C084FC]">Welcome to Workplace AI</h1>
               <p className="text-sm text-muted-foreground">
                 Automate workplace tasks with AI-powered tools.
               </p>
